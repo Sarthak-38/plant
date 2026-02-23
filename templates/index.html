@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Plant Disease Detection</title>
+
+<style>
+/* ===== Background ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#4CAF50,#2E7D32,#1B5E20);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== Card Container ===== */
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    width: 500px;
+    text-align: center;
+}
+
+/* ===== Title ===== */
+h1 {
+    color: #2E7D32;
+}
+
+/* ===== Upload Box ===== */
+input[type="file"] {
+    margin: 20px 0;
+    padding: 10px;
+    border: 2px dashed #4CAF50;
+    border-radius: 10px;
+    width: 100%;
+}
+
+/* ===== Button ===== */
+button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2E7D32;
+}
+
+/* ===== Result Box ===== */
+.result {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #E8F5E9;
+}
+
+/* ===== Disease Text ===== */
+.disease {
+    color: #1B5E20;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ===== Info Box ===== */
+.info {
+    margin-top: 15px;
+    text-align: left;
+    background: #F1F8E9;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* ===== Star Rating ===== */
+.stars {
+    color: gold;
+    font-size: 24px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌿 Plant Disease Detection</h1>
+<p>Upload a leaf image to detect disease & get cure</p>
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<input type="file" name="image" required>
+<br>
+<button type="submit">🔍 Predict Disease</button>
+</form>
+
+{% if prediction %}
+<div class="result">
+
+<div class="stars">
+★★★★★
+</div>
+
+<p class="disease">Detected: {{ prediction }}</p>
+
+{% if disease_info %}
+<div class="info">
+<h3>🩺 Disease Information & Cure</h3>
+<p>{{ disease_info|linebreaks }}</p>
+</div>
+{% endif %}
+
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
